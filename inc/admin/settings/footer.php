@@ -198,7 +198,7 @@ Options::add_field(
 		'id'          => 'sticky_footer',
 		'section'     => 'footer_section',
 		'name'        => esc_html__( 'Sticky footer', 'omniverse' ),
-		'hint'        => '<video data-src="' . OMNIVERSE_TOOLTIP_URL . 'footer-sticky.mp4" autoplay loop muted></video>',
+		'hint'        => '<a href="https://omniverse.zynxsol.com/docs/set-up-footer/" target="_blank"><video data-src="' . OMNIVERSE_TOOLTIP_URL . 'footer-sticky.mp4" autoplay loop muted></video></a>',
 		'description' => esc_html__( 'The footer will be displayed behind the content of the page and will be visible when user scrolls to the bottom on the page.', 'omniverse' ),
 		'group'       => esc_html__( 'Settings', 'omniverse' ),
 		'type'        => 'switcher',

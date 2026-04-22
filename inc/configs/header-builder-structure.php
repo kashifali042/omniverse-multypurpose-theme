@@ -181,9 +181,9 @@ $header_structure = array(
 					'id' => 'background',
 					'value' => array(
 						'background-color' => array(
-							'r' => 130,
-							'g' => 183,
-							'b' => 53,
+							'r' => 44,
+							'g' => 61,
+							'b' => 79,
 							'a' => 1,
 						) ,
 					) ,

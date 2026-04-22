@@ -51,4 +51,9 @@ new DN\Theme();
 
 define( 'OMNIVERSE_VERSION', omniverse_get_theme_info( 'Version' ) );
 
+add_filter('woodmart_get_inline_css', function($css) {
+    $css .= '.whb-top-bar { background-color: #000000 !important; }';
+    return $css;
+});
+
 

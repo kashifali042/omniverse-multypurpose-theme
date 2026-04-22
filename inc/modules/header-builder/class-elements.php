@@ -14,30 +14,7 @@ class Elements {
 	 *
 	 * @var array
 	 */
-	public $elements = array(
-		'Root',
-		'Row',
-		'Column',
-		'Logo',
-		'Mainmenu',
-		'Menu',
-		'Burger',
-		'Cart',
-		'Wishlist',
-		'Compare',
-		'Search',
-		'Mobilesearch',
-		'Account',
-		'Categories',
-		'Divider',
-		'Space',
-		'Text',
-		'HTMLBlock',
-		'Button',
-		'Infobox',
-		'Social',
-		'Stickynavigation',
-	);
+	public $elements = array();
 
 	/**
 	 * Elements object classes.
@@ -50,8 +27,65 @@ class Elements {
 	 * Construct.
 	 */
 	public function __construct() {
+		$this->build_elements_list();
 		$this->include_files();
 		add_action( 'wp_ajax_omniverse_get_builder_elements', array( $this, 'get_elements_ajax' ) );
+	}
+
+	/**
+	 * Build elements list dynamically based on active plugins.
+	 *
+	 * @return void
+	 */
+	public function build_elements_list() {
+		// Core elements (always available)
+		$core_elements = array(
+			'Root',
+			'Row',
+			'Column',
+			'Logo',
+			'Mainmenu',
+			'Menu',
+			'Burger',
+			'Search',
+			'Mobilesearch',
+			'Categories',
+			'Divider',
+			'Space',
+			'Text',
+			'HTMLBlock',
+			'Button',
+			'Infobox',
+			'Social',
+			'Stickynavigation',
+		);
+
+		$this->elements = $core_elements;
+
+		// WooCommerce elements (only if WooCommerce is active)
+		if ( function_exists( 'wc_get_products' ) || class_exists( 'WooCommerce' ) ) {
+			$this->elements = array_merge( $this->elements, array(
+				'Cart',
+				'Wishlist',
+				'Compare',
+				'Account',
+			) );
+		}
+
+		// LearnPress elements (only if LearnPress is active)
+		if ( class_exists( 'LearnPress' ) || defined( 'LEARNPRESS_PLUGIN_FILE' ) ) {
+			$this->elements = array_merge( $this->elements, array(
+				'Learnpressprofile',
+				'Learnpresscourses',
+				'Learnpressnotifications',
+				'Learnpresscart',
+			) );
+		}
+
+		// WPML language switcher (only if WPML is active)
+		if ( defined( 'WPML_PLUGIN_BASENAME' ) ) {
+			$this->elements[] = 'Languages';
+		}
 	}
 
 	/**
@@ -60,10 +94,6 @@ class Elements {
 	 * @return void
 	 */
 	public function include_files() {
-		if ( defined( 'WPML_PLUGIN_BASENAME' ) ) {
-			$this->elements[] = 'Languages';
-		}
-
 		require_once OMNIVERSE_HB_DIR . 'elements/abstract/class-element.php';
 
 		foreach ( $this->elements as $class ) {
